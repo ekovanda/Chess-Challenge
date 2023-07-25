@@ -6,6 +6,6 @@ public class MyBot : IChessBot
     {
         Move[] moves = board.GetLegalMoves();
         System.Random rng = new();
-        return moves[rng.Next(moves.Length)];
+        return moves[rng.Next(moves.Length)]; //As in video
     }
 }
