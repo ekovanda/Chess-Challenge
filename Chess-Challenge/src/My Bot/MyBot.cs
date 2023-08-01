@@ -1,6 +1,7 @@
 ﻿using ChessChallenge.API;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
+using System.Collections.Generic;
 
 public class MyBot : IChessBot
 {
@@ -12,32 +13,11 @@ public class MyBot : IChessBot
 
         Move[] moves = board.GetLegalMoves();
 
-        //moveSequence = ["e2e4", "f1c4", "d1h5", "h5f7"]
-
-        if (board.IsWhiteToMove)
+        List<string> l = new List<string> { "e2e4", "f1c4", "d1h5", "h5f7"};
+        Move nextMove = new Move(l[board.PlyCount / 2], board); // fix index out of range error for move 5+
+        if (board.IsWhiteToMove && Array.Exists(moves, move => move.Equals(nextMove)))
         {
-            // Create a Scholar's mate bot
-            if (board.PlyCount == 0)
-            {
-                return new Move("e2e4", board);
-            }
-            else if (board.PlyCount == 2)
-            {
-                return new Move("f1c4", board);
-            }
-            else if (board.PlyCount == 4)
-            {
-                return new Move("d1h5", board);
-            }
-            else if (board.PlyCount == 6)
-            {
-                return new Move("h5f7", board);
-            }
-            else
-            {
-                System.Random rng = new();
-                return moves[rng.Next(moves.Length)];
-            }
+            return nextMove;
         }
         else
         {
